@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOfSale.RyanW84", "PointOfSale.RyanW84.csproj", "{DC9E8356-9FA1-4022-A813-D13E7A944E83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOfSale.EntityFramework.RyanW84", "PointOfSale.EntityFramework.RyanW84.csproj", "{DC9E8356-9FA1-4022-A813-D13E7A944E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
