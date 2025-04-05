@@ -4,6 +4,10 @@ namespace PointOfSale.EntityFramework.RyanW84;
 
 enum MenuOptions
     {
+    [Display(Name = "Add Category")]
+    AddCategory,
+    [Display(Name = "View All Categories")]
+    ViewAllCategories,
     [Display(Name = "Add Product")]
     AddProduct,
     [Display(Name = "Delete Product")]

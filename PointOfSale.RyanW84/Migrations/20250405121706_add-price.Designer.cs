@@ -10,8 +10,8 @@ using PointOfSale.EntityFramework.EntityFramework;
 namespace PointOfSale.EntityFramework.RyanW84.Migrations
 {
     [DbContext(typeof(ProductsContext))]
-    [Migration("20250404125218_initial-migration")]
-    partial class initialmigration
+    [Migration("20250405121706_add-price")]
+    partial class addprice
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
