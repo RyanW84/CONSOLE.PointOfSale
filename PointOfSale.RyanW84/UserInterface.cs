@@ -5,6 +5,8 @@ using PointOfSale.EntityFramework.RyanW84.Services;
 
 using Spectre.Console;
 
+using static PointOfSale.EntityFramework.RyanW84.Enums;
+
 namespace PointOfSale.EntityFramework.RyanW84;
 
 static internal class UserInterface
@@ -39,51 +41,116 @@ static internal class UserInterface
             {
             Console.Clear();
             var usersChoice = AnsiConsole.Prompt(
-                new SelectionPrompt<MenuOptions>()
+                new SelectionPrompt<MainMenuOptions>()
                     .Title("Welcome to E.P.O.S\nWhat would you like to do?")
-                    .AddChoices(Enum.GetValues(typeof(MenuOptions)).Cast<MenuOptions>())
+                    .AddChoices(Enum.GetValues(typeof(MainMenuOptions)).Cast<MainMenuOptions>())
                     .UseConverter(choice => GetEnumDisplayName(choice))
             );
 
             switch (usersChoice)
                 {
-                case MenuOptions.AddCategory:
+                case MainMenuOptions.ManageCategories:
+                CategoriesMenu();
+                break;
+                case MainMenuOptions.ManageProducts:
+                ProductsMenu();
+                break;
+                case MainMenuOptions.Quit:
+                isMenuRunning = false;
+                Console.WriteLine("Thank you for using our E.P.O.S App");
+                break;
+                default:
+                Console.WriteLine("Please enter a correct option");
+                Console.ReadKey();
+                MainMenu();
+                break;
+
+                }
+            }
+        }
+
+    internal static void CategoriesMenu()
+        {
+        bool isCategoryMenuRunning = true;
+
+        while (isCategoryMenuRunning)
+            {
+            Console.Clear();
+            var usersChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<CategoryMenu>()
+                    .Title("Welcome to E.P.O.S\nWhat would you like to do?")
+                    .AddChoices(Enum.GetValues(typeof(CategoryMenu)).Cast<CategoryMenu>())
+                    .UseConverter(choice => GetEnumDisplayName(choice))
+            );
+
+            switch (usersChoice)
+                {
+                case CategoryMenu.AddCategory:
                 CategoryService.InsertCategory();
                 break;
-                case MenuOptions.DeleteCategory:
+                case CategoryMenu.DeleteCategory:
                 CategoryService.DeleteCategory();
                 break;
-                case MenuOptions.UpdateCategory:
+                case CategoryMenu.UpdateCategory:
                 CategoryService.UpdateCategory();
                 break;
-                case MenuOptions.ViewAllCategories:
+                case CategoryMenu.ViewCategory:
+                CategoryService.GetCategory();
+                break;
+                case CategoryMenu.ViewAllCategories:
                 CategoryService.GetCategories();
                 break;
-                case MenuOptions.AddProduct:
-                ProductService.InsertProduct();
-                break;
-                case MenuOptions.DeleteProduct:
-                ProductService.DeleteProduct();
-                break;
-                case MenuOptions.UpdateProduct:
-                ProductService.UpdateProduct();
-                break;
-                case MenuOptions.ViewProduct:
-                ProductService.GetProduct();
-                break;
-                case MenuOptions.ViewAllProducts:
-                ProductService.GetProducts();
-                break;
-                case MenuOptions.Quit:
-                isMenuRunning = false;
-                Console.WriteLine("Thank you for using our E.P.O.S software\nGoodbye!");
+                case CategoryMenu.GoBack:
+                isCategoryMenuRunning = false;
                 break;
                 default:
                 Console.Write("Please choose a valid option (Press Any Key to continue:");
                 Console.ReadLine();
-                MainMenu();
+                CategoriesMenu();
                 break;
+                }
+            }
+        }
 
+    internal static void ProductsMenu()
+        {
+        bool isProductMenuRunning = true;
+
+        while (isProductMenuRunning)
+            {
+            Console.Clear();
+            var usersChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<ProductMenu>()
+                    .Title("Welcome to E.P.O.S\nWhat would you like to do?")
+                    .AddChoices(Enum.GetValues(typeof(ProductMenu)).Cast<ProductMenu>())
+                    .UseConverter(choice => GetEnumDisplayName(choice))
+            );
+
+            switch (usersChoice)
+                {
+                case ProductMenu.AddProduct:
+                ProductService.InsertProduct();
+                break;
+                case ProductMenu.DeleteProduct:
+                ProductService.DeleteProduct();
+                break;
+                case ProductMenu.UpdateProduct:
+                ProductService.UpdateProduct();
+                break;
+                case ProductMenu.ViewProduct:
+                ProductService.GetProduct();
+                break;
+                case ProductMenu.ViewAllProducts:
+                ProductService.GetProducts();
+                break;
+                case ProductMenu.GoBack:
+                isProductMenuRunning = false;
+                break;
+                default:
+                Console.Write("Please choose a valid option (Press Any Key to continue:");
+                Console.ReadLine();
+                ProductsMenu();
+                break;
                 }
             }
         }
@@ -142,6 +209,23 @@ static internal class UserInterface
 
         Console.WriteLine("Press any key to continue");
         Console.ReadLine();
+        }
+
+    internal static void ShowCategory(Category category)
+        {
+
+        var panel = new Panel($"ID: {category.CategoryId} \nName: {category.Name} \nProduct Count: {category.Products.Count}");
+        panel.Header = new PanelHeader($"** {category.Name} **");
+        panel.Padding = new Padding(2, 2, 2, 2);
+
+        AnsiConsole.Write(panel);
+
+        ShowProductTable(category.Products);
+
+        Console.WriteLine("Press any key to return to Main Menu");
+        Console.ReadLine();
+
+
         }
     }
 
