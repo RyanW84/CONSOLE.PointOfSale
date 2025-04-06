@@ -6,8 +6,12 @@ enum MenuOptions
     {
     [Display(Name = "Add Category")]
     AddCategory,
+    [Display(Name = "Delete Category")]
+    DeleteCategory,
     [Display(Name = "View All Categories")]
     ViewAllCategories,
+    [Display(Name = "Update Category")]
+    UpdateCategory,
     [Display(Name = "Add Product")]
     AddProduct,
     [Display(Name = "Delete Product")]

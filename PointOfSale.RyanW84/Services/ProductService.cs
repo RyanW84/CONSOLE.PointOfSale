@@ -13,22 +13,15 @@ internal class ProductService
         product.Name = AnsiConsole.Ask<string>("Product's name:");
         product.Price = AnsiConsole.Ask<decimal>("Product's price:");
         product.CategoryId = CategoryService.
-       GetCategoryOptionInput();
+       GetCategoryOptionInput().CategoryId;
 
-       ProductController.AddProduct(product);
+        ProductController.AddProduct(product);
         }
     internal static void DeleteProduct()
         {
         var product = GetProductOptionInput();
         ProductController.DeleteProduct(product);
         }
-
-    internal static void GetProducts()
-        {
-        var products = ProductController.GetProducts();
-        UserInterface.ShowProductTable(products);
-        }
-
     internal static void UpdateProduct()
         {
         var product = GetProductOptionInput();
@@ -40,17 +33,22 @@ internal class ProductService
         product.Price = AnsiConsole.Confirm("Update Product Price?") ?
        AnsiConsole.Ask<decimal>("Product's new price: ")
        : product.Price;
+        product.Category = AnsiConsole.Confirm("Update Category?") ?
+        CategoryService.GetCategoryOptionInput() : product.Category; //05:03
 
 
         ProductController.UpdateProduct(product);
         }
-
     internal static void GetProduct()
         {
         var product = GetProductOptionInput();
         UserInterface.ShowProduct(product);
         }
-
+    internal static void GetProducts()
+        {
+        var products = ProductController.GetProducts();
+        UserInterface.ShowProductTable(products);
+        }
     static private Product GetProductOptionInput()
         {
         var products = ProductController.GetProducts();

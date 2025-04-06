@@ -50,6 +50,12 @@ static internal class UserInterface
                 case MenuOptions.AddCategory:
                 CategoryService.InsertCategory();
                 break;
+                case MenuOptions.DeleteCategory:
+                CategoryService.DeleteCategory();
+                break;
+                case MenuOptions.UpdateCategory:
+                CategoryService.UpdateCategory();
+                break;
                 case MenuOptions.ViewAllCategories:
                 CategoryService.GetCategories();
                 break;
@@ -84,7 +90,7 @@ static internal class UserInterface
 
     internal static void ShowProduct(Product product)
         {
-        var panel = new Panel($"ID: {product.ProductId} \nName: {product.Name} \nPrice: {product.Price}");
+        var panel = new Panel($"ID: {product.ProductId} \nName: {product.Name} \nPrice: £{product.Price} \nCategory: {product.Category.Name}");
         panel.Header = new PanelHeader("** Product Info **");
         panel.Padding = new Padding(2, 2, 2, 2);
 
@@ -99,14 +105,17 @@ static internal class UserInterface
         var table = new Table();
         table.AddColumn("ID");
         table.AddColumn("Name");
-        table.AddColumn("Price");
+        table.AddColumn("Price £");
+        table.AddColumn("Category");
 
         foreach (var product in products)
             {
             table.AddRow(
             product.ProductId.ToString(),
             product.Name,
-            product.Price.ToString());
+            product.Price.ToString(),
+            product.Category.Name
+            );
             }
 
         AnsiConsole.Write(table);
@@ -129,10 +138,10 @@ static internal class UserInterface
             );
             }
 
-            AnsiConsole.Write(table);
+        AnsiConsole.Write(table);
 
-            Console.WriteLine("Press any key to continue");
-            Console.ReadLine();
-            }
+        Console.WriteLine("Press any key to continue");
+        Console.ReadLine();
         }
-    
+    }
+

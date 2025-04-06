@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using PointOfSale.EntityFramework.RyanW84.Controllers;
+﻿using PointOfSale.EntityFramework.RyanW84.Controllers;
 using PointOfSale.EntityFramework.RyanW84.Models;
 
 using Spectre.Console;
@@ -16,31 +10,40 @@ internal class CategoryService
     internal static void InsertCategory()
         {
         var category = new Category();
-        category.Name = AnsiConsole.Ask<string>("Catergory's name:");
+        category.Name = AnsiConsole.Ask<string>("Category's name:");
 
         CategoryController.AddCategory(category);
 
         }
-
-        internal static void GetCategories()
+    internal static void DeleteCategory()
         {
-        var categories =CategoryController.GetCategories();
-        UserInterface.ShowCategoryTable(categories);
-       
+        var category = GetCategoryOptionInput();
+        CategoryController.DeleteCategory(category);
         }
-
-    internal static int GetCategoryOptionInput()
+    internal static void UpdateCategory()
         {
-        var categories
-        = CategoryController.GetCategories();
+        var category = GetCategoryOptionInput();
+
+        category.Name = AnsiConsole.Ask<string>("Category's new name:");
+
+        CategoryController.UpdateCategory(category);
+        }
+    internal static Category GetCategoryOptionInput()
+        {
+        var categories = CategoryController.GetCategories();
         var categoriesArray = categories.Select(x => x.Name).ToArray();
         var option = AnsiConsole.Prompt(new SelectionPrompt<string>()
         .Title("Choose Category")
         .AddChoices(categoriesArray));
-        var id = categories.Single(x => x.Name == option).CategoryId;
-     
+        var category = categories.Single(x => x.Name == option);
 
-        return id;
+        return category;
         }
+    internal static void GetCategories()
+        {
+        var categories = CategoryController.GetCategories();
+        UserInterface.ShowCategoryTable(categories);
+        }
+  
     }
 
