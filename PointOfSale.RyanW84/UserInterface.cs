@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 using PointOfSale.EntityFramework.RyanW84.Models;
+using PointOfSale.EntityFramework.RyanW84.Models.DTOs;
 using PointOfSale.EntityFramework.RyanW84.Services;
 
 using Spectre.Console;
@@ -54,6 +55,9 @@ static internal class UserInterface
                 break;
                 case MainMenuOptions.ManageProducts:
                 ProductsMenu();
+                break;
+                case MainMenuOptions.ManagerOrders:
+                OrdersMenu(); 
                 break;
                 case MainMenuOptions.Quit:
                 isMenuRunning = false;
@@ -155,6 +159,43 @@ static internal class UserInterface
             }
         }
 
+    internal static void OrdersMenu()
+        {
+        bool isOrdersMenuRunning = true;
+
+        while (isOrdersMenuRunning)
+            {
+            Console.Clear();
+            var usersChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<OrderMenu>()
+                    .Title("Welcome to E.P.O.S\nWhat would you like to do?")
+                    .AddChoices(Enum.GetValues(typeof(OrderMenu)).Cast<OrderMenu>())
+                    .UseConverter(choice => GetEnumDisplayName(choice))
+            );
+
+            switch (usersChoice)
+                {
+                case OrderMenu.AddOrder:
+                OrderService.InsertOrder();
+                break;
+                case OrderMenu.ViewOrder:
+                OrderService.GetOrder();
+                break;
+                case OrderMenu.ViewAllOrders:
+                OrderService.GetOrders();
+                break;
+                case OrderMenu.GoBack:
+                isOrdersMenuRunning = false;
+                break;
+                default:
+                Console.Write("Please choose a valid option (Press Any Key to continue:");
+                Console.ReadLine();
+                OrdersMenu();
+                break;
+                }
+            }
+        }
+
     internal static void ShowProduct(Product product)
         {
         var panel = new Panel($"ID: {product.ProductId} \nName: {product.Name} \nPrice: £{product.Price} \nCategory: {product.Category.Name}");
@@ -224,8 +265,68 @@ static internal class UserInterface
 
         Console.WriteLine("Press any key to return to Main Menu");
         Console.ReadLine();
+        }
 
+    internal static void ShowOrderTable(List<Order> orders)
+        {
+        var table = new Table();
+        table.AddColumn("ID");
+        table.AddColumn("Date");
+        table.AddColumn("Count");
+        table.AddColumn("Total Price £");
 
+        foreach (Order order in orders)
+            {
+            table.AddRow(
+            order.OrderId.ToString(),
+            order.CreatedDate.ToString(),
+            order.OrderProducts.Sum(x=> x.Quantity).ToString(),
+            order.TotalPrice.ToString()
+            );
+            }
+
+        AnsiConsole.Write(table);
+
+        Console.WriteLine("Press any key to continue");
+        Console.ReadLine();
+        }
+
+    internal static void ShowOrder(Order order)
+        {
+
+        var panel = new Panel($"ID: {order.OrderId} \nDate: {order.CreatedDate}  \nProduct Count: {order.OrderProducts.Sum(x=>x.Quantity)}");
+        panel.Header = new PanelHeader($"** Order #{order.OrderId} **");
+        panel.Padding = new Padding(2, 2, 2, 2);
+
+        AnsiConsole.Write(panel);
+        }
+
+    internal static void ShowProductForOrderTable(List<ProductForOrderViewDTO> products)
+        {
+        var table = new Table();
+        table.AddColumn("ID");
+        table.AddColumn("Name");
+        table.AddColumn("Category");
+        table.AddColumn("Price £");
+        table.AddColumn("Quantity");
+        table.AddColumn("Total Price £");
+
+        foreach (var product in products)
+            {
+            table.AddRow(
+            product.Id.ToString(),
+            product.Name,
+            product.CategoryName,
+            product.Price.ToString(),
+            product.Quantity.ToString(),
+            product.TotalPrice.ToString());
+            }
+
+        AnsiConsole.Write(table);
+
+        Console.WriteLine("Press Any Key to Return to Menu");
+        Console.ReadLine();
+        Console.Clear();
         }
     }
 

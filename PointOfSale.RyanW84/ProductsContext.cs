@@ -45,8 +45,41 @@ internal class ProductsContext : DbContext
                  {
                  CategoryId = 2,
                  Name = "Juice"
-                 } //05:42
+                 } 
             });
+
+        modelBuilder.Entity<Product>()
+  .HasData(new List<Product>()
+      {
+            new Product
+                {
+                ProductId = 1,
+                CategoryId = 1,
+                Name = "Cappuccino",
+                Price = 5.0m
+                },
+             new Product
+                 {
+                 ProductId = 2,
+                 CategoryId = 1,
+                 Name = "Latte",
+                 Price =6.0m
+                 },
+                    new Product
+                {
+                ProductId = 3,
+                CategoryId = 2,
+                Name = "Orange Juice",
+                Price = 3.0m
+                },
+             new Product
+                 {
+                 ProductId = 4,
+                 CategoryId = 2,
+                 Name = "Apple Juice",
+                 Price =3.0m
+                 }
+      });
 
         }
     }

@@ -10,6 +10,8 @@ internal class Enums
         ManageCategories,
         [Display(Name = "Manage Products")]
         ManageProducts,
+        [Display(Name = "Manage Orders")]
+        ManagerOrders,
         [Display(Name = "Quit")]
         Quit
         }
@@ -44,5 +46,17 @@ internal class Enums
         ViewAllProducts,
         [Display(Name = "Go Back")]
         GoBack
+        }
+
+    internal enum OrderMenu
+    {
+        [Display(Name = "Add Order")]
+        AddOrder,
+        [Display(Name = "View Order")]
+        ViewOrder,
+        [Display(Name = "View All Orders")]
+        ViewAllOrders,
+        [Display(Name = "Go Back")]
+        GoBack,
         }
     }

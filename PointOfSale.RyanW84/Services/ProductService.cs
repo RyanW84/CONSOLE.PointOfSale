@@ -48,7 +48,7 @@ internal class ProductService
         var products = ProductController.GetProducts();
         UserInterface.ShowProductTable(products);
         }
-    static private Product GetProductOptionInput()
+    internal static Product GetProductOptionInput()
         {
         var products = ProductController.GetProducts();
         var productsArray = products.Select(x => x.Name).ToArray();
