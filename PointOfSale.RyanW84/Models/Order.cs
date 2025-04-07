@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PointOfSale.EntityFramework.RyanW84.Models;
+﻿namespace PointOfSale.EntityFramework.RyanW84.Models;
 
 internal class Order
     {
@@ -12,5 +6,7 @@ internal class Order
     public decimal TotalPrice { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime UpdatedDate { get; set; }
+
+    public ICollection<OrderProduct> OrderProducts { get; set; }
     }
 
