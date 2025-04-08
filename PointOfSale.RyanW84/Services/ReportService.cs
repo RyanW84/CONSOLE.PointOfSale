@@ -13,12 +13,13 @@ internal class ReportService
 
         var report = orders.GroupBy(x => new //Linq creates anonymous object
             {
-            x.CreatedDate.Month
+            x.CreatedDate.Month,
+            x.CreatedDate.Year
             })
             .Select(grp => new MonthlyReportDTO
                 {
                 //Igrouping links elements by Key
-                Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(grp.Key.Month),
+                Month =$" {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(grp.Key.Month)} {grp.Key.Year}",
                 TotalPrice = grp.Sum(grp => grp.TotalPrice),
                 TotalQuantity = grp.Sum(x => x.OrderProducts.Sum(x => x.Quantity))
                 }).ToList();
