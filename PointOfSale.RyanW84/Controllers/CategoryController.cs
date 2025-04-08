@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-using PointOfSale.EntityFramework.EntityFramework;
 using PointOfSale.EntityFramework.RyanW84.Models;
+using PointOfSale.RyanW84.RyanW84;
 
 namespace PointOfSale.EntityFramework.RyanW84.Controllers;
 

@@ -12,6 +12,8 @@ internal class Enums
         ManageProducts,
         [Display(Name = "Manage Orders")]
         ManagerOrders,
+        [Display(Name = "Generate Report")]
+        GenerateReport,
         [Display(Name = "Quit")]
         Quit
         }

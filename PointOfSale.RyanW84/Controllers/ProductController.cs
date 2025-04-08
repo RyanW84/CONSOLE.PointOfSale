@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-using PointOfSale.EntityFramework.EntityFramework;
 using PointOfSale.EntityFramework.RyanW84.Models;
+using PointOfSale.RyanW84.RyanW84;
 
 namespace PointOfSale.EntityFramework.RyanW84.Controllers;
 
@@ -35,7 +34,7 @@ internal class ProductController
         {
         using var db = new ProductsContext();
         var product = db.Products
-        .Include(x=>x.Category)
+        .Include(x => x.Category)
         .SingleOrDefault(x => x.ProductId == id);
 
         return product;
@@ -46,7 +45,7 @@ internal class ProductController
         using var db = new ProductsContext();
 
         var products = db.Products
-        .Include(x=>x.Category)
+        .Include(x => x.Category)
         .ToList();
 
         return products;

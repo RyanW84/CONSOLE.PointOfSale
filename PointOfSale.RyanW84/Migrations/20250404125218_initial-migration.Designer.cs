@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PointOfSale.EntityFramework.EntityFramework;
+using PointOfSale.EntityFramework.RyanW84;
+using PointOfSale.RyanW84.RyanW84;
 
 #nullable disable
 

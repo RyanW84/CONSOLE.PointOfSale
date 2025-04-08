@@ -59,6 +59,9 @@ static internal class UserInterface
                 case MainMenuOptions.ManagerOrders:
                 OrdersMenu(); 
                 break;
+                case MainMenuOptions.GenerateReport:
+                ReportService.CreateMonthlyReport();
+                break;
                 case MainMenuOptions.Quit:
                 isMenuRunning = false;
                 Console.WriteLine("Thank you for using our E.P.O.S App");
@@ -327,6 +330,26 @@ static internal class UserInterface
         Console.WriteLine("Press Any Key to Return to Menu");
         Console.ReadLine();
         Console.Clear();
+        }
+
+    internal static void ShowReportByMonth(List<MonthlyReportDTO> report)
+        {
+        var table = new Table();
+        table.AddColumn("Month");
+        table.AddColumn("Total Quantity");
+        table.AddColumn("Total Sales £");
+
+        foreach (var item in report)
+            {
+            table.AddRow(
+            item.Month,
+            item.TotalQuantity.ToString(),
+            item.TotalPrice.ToString());
+            }
+
+            AnsiConsole.Write(table);
+        Console.WriteLine("Press any key to continue");
+        Console.ReadKey(); //08:30
         }
     }
 
